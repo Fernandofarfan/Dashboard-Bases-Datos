@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dashboard-db-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - DEBUG=True
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - postgres
+      - mysql
+      - mongodb
+    networks:
+      - dashboard-network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dashboard-db-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    networks:
+      - dashboard-network
+
+  # PostgreSQL (Base de datos de prueba)
+  postgres:
+    image: postgres:16-alpine
+    container_name: dashboard-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dashboard-network
+
+  # MySQL (Base de datos de prueba)
+  mysql:
+    image: mysql:8.0
+    container_name: dashboard-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - dashboard-network
+
+  # MongoDB (Base de datos de prueba)
+  mongodb:
+    image: mongo:7
+    container_name: dashboard-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - dashboard-network
+
+volumes:
+  postgres_data:
+  mysql_data:
+  mongo_data:
+
+networks:
+  dashboard-network:
+    driver: bridge
