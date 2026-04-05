@@ -14,6 +14,10 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 - Configuración de Docker Compose
 - README completo con documentación
 
+### Arreglado
+- Corrección de mapeo de puertos locales para BDs en Docker para evitar colisiones
+- Removida dependencia inválida `python-cors` y añadido `tsconfig.node.json` faltante en el Frontend
+
 ### Por Hacer
 - [ ] Conexión a bases de datos PostgreSQL
 - [ ] Conexión a bases de datos MySQL

@@ -24,9 +24,9 @@ docker-compose up --build
 Esto levantará:
 - ✅ Backend API (Puerto 8000)
 - ✅ Frontend React (Puerto 5173)
-- ✅ PostgreSQL (Puerto 5432)
-- ✅ MySQL (Puerto 3306)
-- ✅ MongoDB (Puerto 27017)
+- ✅ PostgreSQL (Puerto 5433)
+- ✅ MySQL (Puerto 3307)
+- ✅ MongoDB (Puerto 27018)
 
 ### Paso 3: Acceder a la aplicación
 - **Frontend:** http://localhost:5173
